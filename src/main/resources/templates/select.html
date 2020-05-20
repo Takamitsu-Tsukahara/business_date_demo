@@ -7,21 +7,26 @@
 <body>
 
 	<p th:text="${input}"></p>
-
-	<p th:text="${criteria_Year}">年</p>
-
+	<p>
+		<span th:text="${criteria_Year}">年</span>
+		<span th:text="${criteria_Month}">月</span>
+		<span th:text="${criteria_Day}">日</span>
+		<span th:text="${criteria_Week}">日</span>
+	</p>
 	<table border="1">
 		<tr>
 			<th></th>
 			<th>年</th>
 			<th>月</th>
 			<th>日</th>
+			<th>曜日</th>
 		</tr>
 		<tr>
 			<th>基準日</th>
 			<th th:text="${criteria_Year}">年</th>
 			<th th:text="${criteria_Month}">月</th>
 			<th th:text="${criteria_Day}">日</th>
+			<th th:text="${criteria_Week}">曜日</th>
 		</tr>
 	</table>
 

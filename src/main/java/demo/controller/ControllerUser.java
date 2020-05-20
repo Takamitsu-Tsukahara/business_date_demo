@@ -68,15 +68,16 @@ public class ControllerUser {
     public String select(@PathVariable Integer id, Model model) {
     	ModelUser UserData = useRepository.selectByPrimaryKey(id);
     	model.addAttribute("input", UserData);
-    	SimpleDateFormat yearFormat = new SimpleDateFormat("yyyy");
-    	SimpleDateFormat monthFormat = new SimpleDateFormat("MM");
-    	SimpleDateFormat dayFormat = new SimpleDateFormat("dd");
+    	SimpleDateFormat yearFormat = new SimpleDateFormat("yyyy");//年("yy" 2020 -> 2020)(yyyy 2020 -> 20)
+    	SimpleDateFormat monthFormat = new SimpleDateFormat("MM");//月("M" 8 -> 8)("MM" 8 -> 08)
+    	SimpleDateFormat dayFormat = new SimpleDateFormat("dd");//年に対する日("D" 9 -> 9)("DDD" 9 -> 009),月に対する日("d" 9 -> 9)("dd" 9 -> 09)
+    	SimpleDateFormat weekFormat = new SimpleDateFormat("E");//("E" 2011年8月30日→火)
 
 		//データを分けてテーブル表示
 		model.addAttribute("criteria_Year", yearFormat.format(UserData.getYearMonthDay()));
 		model.addAttribute("criteria_Month", monthFormat.format(UserData.getYearMonthDay()));
 		model.addAttribute("criteria_Day", dayFormat.format(UserData.getYearMonthDay()));
-
+		model.addAttribute("criteria_Week", weekFormat.format(UserData.getYearMonthDay()));
 
 
     	return "select";
