@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <title>ユーザー編集</title>
+    <link href="/optioin.css" rel="stylesheet"></link>
+    <meta charset="utf-8" />
+  </head>
+<body>
+	<span th:text="${input}"></span>
+	<form th:action="@{/editAdd}" th:object="${input_screen}" method="post">
+		<table>
+			<tr>
+				<td><input type="hidden" id="inputId" name="inputId" th:field="*{id}"></td>
+				<td><input type="date" id="inputYearMonthDay" name="inputYearMonthDay" th:field="*{yearMonthDay}"></td>
+			</tr>
+		</table>
+		<div>
+			<input type="submit" value="登録" class="btn">
+		</div>
+	</form>
+</body>
+</html>
