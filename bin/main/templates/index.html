@@ -25,13 +25,15 @@
 					<th>ID</th>
 					<th>日付</th>
 					<th></th>
+					<th></th>
 				</tr>
 			</thead>
 			<tbody>
 				<tr th:each="user : ${List}" th:object="${user}">
 					<td th:text="*{id}"></td>
 					<td th:text="*{#dates.format(yearMonthDay,'yyyy-MM-dd')}"></td>
-					<td><a th:href="@{/{id}(id=*{id})}">編集</a></td>
+					<td><a th:href="@{/edit{id}(id=*{id})}">編集</a></td>
+					<td><a th:href="@{/select{id}(id=*{id})}">基準日にして表示</a></td>
 				</tr>
 			</tbody>
 		</table>
