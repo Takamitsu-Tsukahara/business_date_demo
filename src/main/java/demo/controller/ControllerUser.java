@@ -1,8 +1,12 @@
 package demo.controller;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.format.TextStyle;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import javax.validation.Valid;
 
@@ -66,18 +70,34 @@ public class ControllerUser {
 
     @RequestMapping("/select{id}")
     public String select(@PathVariable Integer id, Model model) {
+    	//データ呼び出し
     	ModelUser UserData = useRepository.selectByPrimaryKey(id);
+    	//確認
+    	System.out.println(UserData);
+    	//Html出力テスト
     	model.addAttribute("input", UserData);
+    	//データを分割するためのフォーマット(Date型)
     	SimpleDateFormat yearFormat = new SimpleDateFormat("yyyy");//年("yy" 2020 -> 2020)(yyyy 2020 -> 20)
     	SimpleDateFormat monthFormat = new SimpleDateFormat("MM");//月("M" 8 -> 8)("MM" 8 -> 08)
     	SimpleDateFormat dayFormat = new SimpleDateFormat("dd");//年に対する日("D" 9 -> 9)("DDD" 9 -> 009),月に対する日("d" 9 -> 9)("dd" 9 -> 09)
     	SimpleDateFormat weekFormat = new SimpleDateFormat("E");//("E" 2011年8月30日→火)
 
-		//データを分けてテーブル表示
+		//データを分けてテーブル表示(HTML出力)
 		model.addAttribute("criteria_Year", yearFormat.format(UserData.getYearMonthDay()));
 		model.addAttribute("criteria_Month", monthFormat.format(UserData.getYearMonthDay()));
 		model.addAttribute("criteria_Day", dayFormat.format(UserData.getYearMonthDay()));
 		model.addAttribute("criteria_Week", weekFormat.format(UserData.getYearMonthDay()));
+
+		//Date型からLocalDate型に変換
+		LocalDate ldud = UserData.getYearMonthDay().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+		//確認
+		System.out.println(ldud);
+
+		//データを分けてテーブル表示(HTML出力)
+		model.addAttribute("localDate_Year", ldud.getYear());
+		model.addAttribute("localDate_Month", ldud.getMonthValue());//ldud.getMonth()
+		model.addAttribute("localDate_Day", ldud.getDayOfMonth());//ldud.getDayOfYear()
+		model.addAttribute("localDate_Week", ldud.getDayOfWeek().getDisplayName(TextStyle.SHORT, Locale.JAPANESE));//ldud.getDayOfWeek()
 
 
     	return "select";
