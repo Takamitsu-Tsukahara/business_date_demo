@@ -4,6 +4,7 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.format.TextStyle;
+import java.time.temporal.TemporalAdjusters;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -75,7 +76,7 @@ public class ControllerUser {
     	//確認
     	System.out.println(UserData);
     	//Html出力テスト
-    	model.addAttribute("input", UserData);
+//    	model.addAttribute("input", UserData);
     	//データを分割するためのフォーマット(Date型)
     	SimpleDateFormat yearFormat = new SimpleDateFormat("yyyy");//年("yy" 2020 -> 2020)(yyyy 2020 -> 20)
     	SimpleDateFormat monthFormat = new SimpleDateFormat("MM");//月("M" 8 -> 8)("MM" 8 -> 08)
@@ -99,6 +100,17 @@ public class ControllerUser {
 		model.addAttribute("localDate_Day", ldud.getDayOfMonth());//ldud.getDayOfYear()
 		model.addAttribute("localDate_Week", ldud.getDayOfWeek().getDisplayName(TextStyle.SHORT, Locale.JAPANESE));//ldud.getDayOfWeek()
 
+		//月末取得
+		LocalDate lastDay = ldud.with(TemporalAdjusters.lastDayOfMonth());
+		//確認
+		System.out.println(lastDay);
+		//Html出力テスト
+    	model.addAttribute("input", lastDay);
+    	//データを分けてテーブル表示(HTML出力)
+    	model.addAttribute("lastDay_Year", lastDay.getYear());
+		model.addAttribute("lastDay_Month", lastDay.getMonthValue());
+		model.addAttribute("lastDay_Day", lastDay.getDayOfMonth());
+		model.addAttribute("lastDay_Week", lastDay.getDayOfWeek().getDisplayName(TextStyle.SHORT, Locale.JAPANESE));
 
     	return "select";
     }
